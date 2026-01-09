@@ -169,11 +169,13 @@ dotnet ef migrations remove
 ```
 
 ---
+
 📝 Decisões técnicas
 
--RabbitMQ real para publicação de eventos de pedidos, garantindo desacoplamento entre microserviços.
--Result Pattern aplicado nos casos de uso para tratamento explícito de sucesso e falhas, evitando exceptions como fluxo normal.
--FluentValidation para validação dos requests, mantendo a API robusta e fácil de extender.
+- RabbitMQ real para publicação de eventos de pedidos, garantindo desacoplamento entre microserviços.
+- Result Pattern aplicado nos casos de uso para tratamento explícito de sucesso e falhas, evitando exceptions como fluxo normal.
+- FluentValidation para validação dos requests, mantendo a API robusta e fácil de extender.
+  
 ---
 
 💡 Melhorias futuras
