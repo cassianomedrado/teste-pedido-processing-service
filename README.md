@@ -44,8 +44,6 @@ tests/
 | Docker & Docker Compose | Infra local |
 | FluentValidation | Validação |
 | Swagger | Documentação da API |
-
-🛠️ Testes
 | xUnit | Framework de testes | 
 | Moq | Mock de dependências | 
 | FluentAssertions | Asserções mais legíveis | 
@@ -148,8 +146,6 @@ Ou somente o projeto de testes:
 dotnet test tests/PedidosProcessamento.Application.Tests
 
 ```
-
----
 
 ---
 
