@@ -1,62 +1,74 @@
-# teste-pedido-processing-service
-📦 Pedido Processing Service
+# 📦 Pedido Processamento Service  
+> **teste-pedido-processing-service**
 
-Microserviço de processamento de pedidos desenvolvido em ASP.NET Core, seguindo princípios de Clean Architecture, com persistência em PostgreSQL, mensageria com RabbitMQ e Entity Framework Core para acesso a dados.
+Microserviço de **processamento de pedidos** desenvolvido em **ASP.NET Core**, seguindo princípios de **Clean Architecture**, com persistência em **PostgreSQL**, mensageria via **RabbitMQ** e **Entity Framework Core**.
 
-🏗️ Arquitetura
+---
 
-O projeto segue uma separação clara de responsabilidades:
+## ✨ Visão geral
 
+- API REST para criação de pedidos  
+- Persistência com EF Core + PostgreSQL  
+- Publicação de eventos via RabbitMQ  
+- Arquitetura limpa e organizada 
+
+---
+
+## 🏗️ Arquitetura
+
+```
 src/
  ├── PedidosProcessamento.WebApi          → API / Startup
  ├── PedidosProcessamento.Application     → Casos de uso, DTOs, Validators
  ├── PedidosProcessamento.Domain          → Entidades e regras de domínio
  └── PedidosProcessamento.Infrastructure → EF Core, Repositórios, RabbitMQ
+tests/
+ └── PedidosProcessamento.Application.Tests
+     ├── Services
+     │   └── CriarPedidoServiceTests.cs
+     └── Validators
+         └── CriarPedidoRequestValidatorTests.cs
+```
 
-🚀 Tecnologias utilizadas
+---
 
-.NET 10
+## 🚀 Tecnologias
 
-ASP.NET Core Web API
+| Tecnologia | Uso |
+|-----------|-----|
+| .NET 10 | Plataforma |
+| ASP.NET Core | Web API |
+| Entity Framework Core | ORM |
+| PostgreSQL | Banco de dados |
+| RabbitMQ | Mensageria |
+| Docker & Docker Compose | Infra local |
+| FluentValidation | Validação |
+| Swagger | Documentação da API |
+| xUnit | Framework de testes | 
+| Moq | Mock de dependências | 
+| FluentAssertions | Asserções mais legíveis | 
+---
 
-Entity Framework Core
+## 📋 Pré-requisitos
 
-PostgreSQL
+- .NET SDK 10  
+- Docker Desktop  
+- EF Core CLI  
 
-RabbitMQ
-
-Docker & Docker Compose
-
-FluentValidation
-
-Swagger (Swashbuckle)
-
-📋 Pré-requisitos
-
-Antes de executar o projeto, certifique-se de ter instalado:
-
-.NET SDK 10
-
-Docker Desktop
-
-CLI do Entity Framework:
-
+```bash
 dotnet tool install --global dotnet-ef
+```
 
+---
 
-ou
+## ⚙️ Configuração
 
-dotnet tool update --global dotnet-ef
+### appsettings.json
 
-⚙️ Configuração do ambiente
-🔹 appsettings.json (WebApi)
-
-Arquivo:
-src/PedidosProcessamento.WebApi/appsettings.json
-
+```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Port=5432;Database=pedidos;Username=postgres;Password=postgres"
+    "DefaultConnection": "Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=postgres"
   },
   "RabbitMQ": {
     "Host": "localhost",
@@ -65,109 +77,111 @@ src/PedidosProcessamento.WebApi/appsettings.json
     "Password": "guest"
   }
 }
+```
 
-🐳 Subindo dependências com Docker
+---
 
-Na raiz do projeto, execute:
+## 🐳 Docker
 
+```bash
 docker compose up -d
+```
 
+RabbitMQ UI: http://localhost:15672  
+Usuário: guest / Senha: guest
 
-Isso irá subir:
+---
 
-PostgreSQL (porta 5432)
+## 🗄️ Migrations
 
-RabbitMQ (porta 5672)
+```bash
+dotnet ef migrations add InitialCreate   --project src/PedidosProcessamento.Infrastructure   --startup-project src/PedidosProcessamento.WebApi
+ou
+Add-Migration InitialCreate
+```
 
-RabbitMQ Management UI (http://localhost:15672)
+```bash
+dotnet ef database update   --project src/PedidosProcessamento.Infrastructure   --startup-project src/PedidosProcessamento.WebApi
+ou
+Update-Database
+```
 
-Credenciais padrão do RabbitMQ:
+---
 
-Usuário: guest
+## ▶️ Executando
 
-Senha: guest
+```bash
+dotnet run --project src/PedidosProcessamento.WebApi
+```
 
-🗄️ Executando migrations do banco
-1️⃣ Criar a migration (caso ainda não exista)
-dotnet ef migrations add InitialCreate \
-  --project src/PedidosProcessamento.Infrastructure \
-  --startup-project src/PedidosProcessamento.WebApi \
-  --output-dir Persistence/Migrations
+Swagger:
 
-2️⃣ Aplicar a migration no banco
-dotnet ef database update \
-  --project src/PedidosProcessamento.Infrastructure \
-  --startup-project src/PedidosProcessamento.WebApi
+```
+https://localhost:7xxx/swagger
+```
 
+---
 
-⚠️ Observação:
-Em ambiente local com Docker, é normal aparecer um aviso de lock ou leitura inicial do __EFMigrationsHistory.
-Se o comando finalizar com Done, a migration foi aplicada corretamente.
+## 📬 RabbitMQ
 
-▶️ Executando a aplicação
+Evento publicado na fila:
+
+```
+pedido-criado
+```
+
+---
+
+▶️ Executando os testes
 
 Na raiz do projeto:
 
-dotnet run --project src/PedidosProcessamento.WebApi
+```bash
+dotnet test
+```
 
+Ou somente o projeto de testes:
 
-A API ficará disponível em:
+```bash
+dotnet test tests/PedidosProcessamento.Application.Tests
 
-https://localhost:7xxx
-http://localhost:5xxx
+```
 
+---
 
-(os números de porta podem variar)
+## 🧪 Fluxo
 
-📑 Swagger
+```mermaid
+graph TD
+A[POST /api/pedidos] --> B[Validation]
+B --> C[Domain]
+C --> D[PostgreSQL]
+C --> E[RabbitMQ]
+```
 
-Após subir a aplicação, acesse:
+---
 
-https://localhost:7xxx/swagger
+## 🛠️ Comandos úteis
 
+```bash
+dotnet ef migrations list
+dotnet ef migrations remove
+```
 
-Você poderá:
+---
 
-Criar pedidos
+📝 Decisões técnicas
 
-Validar payloads
+- RabbitMQ real para publicação de eventos de pedidos, garantindo desacoplamento entre microserviços.
+- Result Pattern aplicado nos casos de uso para tratamento explícito de sucesso e falhas, evitando exceptions como fluxo normal.
+- FluentValidation para validação dos requests, mantendo a API robusta e fácil de extender.
+  
+---
 
-Testar a API facilmente
+💡 Melhorias futuras
 
-📬 Mensageria (RabbitMQ)
+Se tivéssemos mais tempo, seria interessante:
 
-Ao criar um pedido:
-
-O pedido é persistido no banco
-
-Um evento PedidoCriado é publicado na fila:
-
-pedido-criado
-
-
-Você pode acompanhar as mensagens em:
-
-http://localhost:15672
-
-🧪 Fluxo principal
-
-Requisição HTTP para POST /api/pedidos
-
-Validação com FluentValidation
-
-Criação da entidade de domínio
-
-Persistência no PostgreSQL
-
-Publicação de evento no RabbitMQ
-
-🛠️ Comandos úteis
-Listar migrations
-dotnet ef migrations list \
-  --project src/PedidosProcessamento.Infrastructure \
-  --startup-project src/PedidosProcessamento.WebApi
-
-Remover última migration
-dotnet ef migrations remove \
-  --project src/PedidosProcessamento.Infrastructure \
-  --startup-project src/PedidosProcessamento.WebApi
+- Implementar testes funcionais e de integração, além dos testes unitários já existentes.
+- Adotar Unit of Work para organizar transações e persistência em múltiplos repositórios.
+- Utilizar Dapper para queries mais complexas ou de alta performance, mantendo EF Core para operações CRUD simples.
