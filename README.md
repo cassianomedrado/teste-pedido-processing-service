@@ -167,3 +167,19 @@ C --> E[RabbitMQ]
 dotnet ef migrations list
 dotnet ef migrations remove
 ```
+
+---
+📝 Decisões técnicas
+
+-RabbitMQ real para publicação de eventos de pedidos, garantindo desacoplamento entre microserviços.
+-Result Pattern aplicado nos casos de uso para tratamento explícito de sucesso e falhas, evitando exceptions como fluxo normal.
+-FluentValidation para validação dos requests, mantendo a API robusta e fácil de extender.
+---
+
+💡 Melhorias futuras
+
+Se tivéssemos mais tempo, seria interessante:
+
+-Implementar testes funcionais e de integração, além dos testes unitários já existentes.
+-Adotar Unit of Work para organizar transações e persistência em múltiplos repositórios.
+-Utilizar Dapper para queries mais complexas ou de alta performance, mantendo EF Core para operações CRUD simples.
