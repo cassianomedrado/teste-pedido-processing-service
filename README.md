@@ -182,6 +182,6 @@ dotnet ef migrations remove
 
 Se tivéssemos mais tempo, seria interessante:
 
--Implementar testes funcionais e de integração, além dos testes unitários já existentes.
--Adotar Unit of Work para organizar transações e persistência em múltiplos repositórios.
--Utilizar Dapper para queries mais complexas ou de alta performance, mantendo EF Core para operações CRUD simples.
+- Implementar testes funcionais e de integração, além dos testes unitários já existentes.
+- Adotar Unit of Work para organizar transações e persistência em múltiplos repositórios.
+- Utilizar Dapper para queries mais complexas ou de alta performance, mantendo EF Core para operações CRUD simples.
