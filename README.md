@@ -23,7 +23,11 @@ src/
  ├── PedidosProcessamento.Domain          → Entidades e regras de domínio
  └── PedidosProcessamento.Infrastructure → EF Core, Repositórios, RabbitMQ
 tests/
-└── PedidosProcessamento.UnitTests
+ └── PedidosProcessamento.Application.Tests
+     ├── Services
+     │   └── CriarPedidoServiceTests.cs
+     └── Validators
+         └── CriarPedidoRequestValidatorTests.cs
 ```
 
 ---
@@ -41,6 +45,10 @@ tests/
 | FluentValidation | Validação |
 | Swagger | Documentação da API |
 
+🛠️ Testes
+| xUnit | Framework de testes | 
+| Moq | Mock de dependências | 
+| FluentAssertions | Asserções mais legíveis | 
 ---
 
 ## 📋 Pré-requisitos
@@ -123,6 +131,25 @@ Evento publicado na fila:
 ```
 pedido-criado
 ```
+
+---
+
+▶️ Executando os testes
+
+Na raiz do projeto:
+
+```bash
+dotnet test
+```
+
+Ou somente o projeto de testes:
+
+```bash
+dotnet test tests/PedidosProcessamento.Application.Tests
+
+```
+
+---
 
 ---
 
