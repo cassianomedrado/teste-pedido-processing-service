@@ -1,4 +1,4 @@
-# 📦 Pedido Processing Service  
+# 📦 Pedido Processamento Service  
 > **teste-pedido-processing-service**
 
 Microserviço de **processamento de pedidos** desenvolvido em **ASP.NET Core**, seguindo princípios de **Clean Architecture**, com persistência em **PostgreSQL**, mensageria via **RabbitMQ** e **Entity Framework Core**.
@@ -10,8 +10,7 @@ Microserviço de **processamento de pedidos** desenvolvido em **ASP.NET Core**, 
 - API REST para criação de pedidos  
 - Persistência com EF Core + PostgreSQL  
 - Publicação de eventos via RabbitMQ  
-- Arquitetura limpa e organizada  
-- Ideal como **teste técnico** ou **base de microserviço**
+- Arquitetura limpa e organizada 
 
 ---
 
@@ -23,6 +22,8 @@ src/
  ├── PedidosProcessamento.Application     → Casos de uso, DTOs, Validators
  ├── PedidosProcessamento.Domain          → Entidades e regras de domínio
  └── PedidosProcessamento.Infrastructure → EF Core, Repositórios, RabbitMQ
+tests/
+└── PedidosProcessamento.UnitTests
 ```
 
 ---
@@ -61,7 +62,7 @@ dotnet tool install --global dotnet-ef
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Host=localhost;Port=5432;Database=pedidos;Username=postgres;Password=postgres"
+    "DefaultConnection": "Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=postgres"
   },
   "RabbitMQ": {
     "Host": "localhost",
@@ -89,10 +90,14 @@ Usuário: guest / Senha: guest
 
 ```bash
 dotnet ef migrations add InitialCreate   --project src/PedidosProcessamento.Infrastructure   --startup-project src/PedidosProcessamento.WebApi
+ou
+Add-Migration InitialCreate
 ```
 
 ```bash
 dotnet ef database update   --project src/PedidosProcessamento.Infrastructure   --startup-project src/PedidosProcessamento.WebApi
+ou
+Update-Database
 ```
 
 ---
