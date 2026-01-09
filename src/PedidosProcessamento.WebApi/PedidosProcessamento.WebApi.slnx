@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../../docker-compose.yml" />
+  </Folder>
+  <Folder Name="/src/">
+    <Project Path="../PedidosProcessamento.Application/PedidosProcessamento.Application.csproj" />
+    <Project Path="../PedidosProcessamento.Domain/PedidosProcessamento.Domain.csproj" />
+    <Project Path="../PedidosProcessamento.Infrastructure/PedidosProcessamento.Infrastructure.csproj" />
+    <Project Path="PedidosProcessamento.WebApi.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="../../tests/PedidosProcessamento.UnitTests/PedidosProcessamento.UnitTests.csproj" />
+  </Folder>
+</Solution>
